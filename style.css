@@ -1,0 +1,73 @@
+.card-info {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 25%;
+  margin-left: auto;
+  margin-right: auto;
+  width: max-content;
+  transition: 0.5s;
+}
+
+.blur {
+  filter: blur(3px);
+  transition: 0.5s;
+}
+img {
+  width: 100%;
+}
+
+/* img:hover {
+  filter: blur(3px);
+   */
+/* } */
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Old versions of Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome, Edge, Opera and Firefox */
+}
+
+.text-overlay {
+  background-color: rgba(255, 0, 0, 0);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60%;
+  /* display: none; */
+}
+
+.calc-inputs {
+  transition: 0.5s;
+  /* transform: 0.5s; */
+}
+
+.bi#addCoords {
+  font-size: 2em;
+  float:left;
+  /* margin-top: 0.5em; */
+  color: green;
+}
+
+li {
+  list-style-type: none;
+}
+
+@keyframes textColorChange {
+  0% {color: #000000;}
+  50% {color: #ffffff;}
+  100% {color: #000000;}
+}
+/* Use @-webkit-keyframes for Safari/Chrome */
+
+#functionSwitch {
+  animation: textColorChange 2s infinite;
+  background-color: green;
+  border-radius: 5px;
+}
+/* Use -webkit-animation for Safari/Chrome */

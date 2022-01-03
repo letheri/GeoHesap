@@ -1,0 +1,9 @@
+Virgülden sonra gelen prezisyonu sınırla input için.
+DMS yada DegreeDecimal Dönüşümü
+Mobil görünüm
+Dosya yükleme
+Harita gösterme
+Ekranı taşıran inputlar var
+pack unpack coordinates?
+EPSG??
+geojson_find_datum
