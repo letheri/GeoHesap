@@ -1,18 +1,4 @@
-.card-info {
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 25%;
-  margin-left: auto;
-  margin-right: auto;
-  width: max-content;
-  transition: 0.5s;
-}
 
-.blur {
-  filter: blur(3px);
-  transition: 0.5s;
-}
 img {
   width: 100%;
 }
@@ -65,9 +51,43 @@ li {
 }
 /* Use @-webkit-keyframes for Safari/Chrome */
 
+#goCalculation {
+  /* background-color: green; */
+  color: black;
+  border-radius: 5px;
+}
+
 #functionSwitch {
   animation: textColorChange 2s infinite;
   background-color: green;
   border-radius: 5px;
 }
 /* Use -webkit-animation for Safari/Chrome */
+
+#fullLogo {
+  width: 100px;
+}
+
+.calculatorLink{
+  text-decoration: none;
+  color: black;
+}
+.calculatorLink:hover {
+  color: #000000;
+}
+
+.functionBtn {
+  border:#000000;
+  background: linear-gradient(to right, rgb(133, 133, 133) 50%, rgb(204, 204, 204) 50%);
+background-size: 300% 100%;
+background-position:right bottom;
+transition: all .5s ease-out;
+}
+
+.functionBtn:hover {
+  background-position: left bottom;
+}
+
+.descriptor {
+  background-color: rgb(204, 203, 203);
+}
