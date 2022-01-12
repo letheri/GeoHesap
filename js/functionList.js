@@ -43,12 +43,40 @@ const calculations = {
     fullname: "Projected to Geographic",
   },
 
-  directInverse: {
-    fullname: "Direct & Inverse",
+  geodesicDirect: {
+    fullname: "Direct Geodesic",
+    functionFileName: "fundamental.js",
+    functionName: "firstFund",
+    ellipsoidUsage: true,
+    inputFields: 4,
+    fieldNames: ["Latitude", "Longitude","Distance", "Azimuth"], // Order is important
+    //fieldUnits: ["meters","meters","meters"],
+    outputNames: ["Latitude", "Longitude", "Azimuth"],
+    canReverseCalculate: true,
+    reverseCalculationName: "geodesicInverse",
+    needsCommonFunctions: true,
+    //hasImage: true,
+    //imagePath: "/img/0.gif",
+    canFileUpload: true,
+    canParseGeojson: false
   },
 
-  geodesic: {
-    fullname: "Geodesic",
+  geodesicInverse: {
+    fullname: "Inverse Geodesic",
+    functionFileName: "fundamental.js",
+    functionName: "secFund",
+    ellipsoidUsage: true,
+    inputFields: 4,
+    fieldNames: ["Latitude1", "Longitude1","Latitude2", "Longitude2"], // Order is important
+    //fieldUnits: ["meters","meters","meters"],
+    outputNames: ["Azimuth1", "Azimuth2", "Distance"],
+    canReverseCalculate: true,
+    reverseCalculationName: "geodesicDirect",
+    needsCommonFunctions: true,
+    //hasImage: true,
+    //imagePath: "/img/0.gif",
+    canFileUpload: true,
+    canParseGeojson: false
   },
 
   datumTrans: {
@@ -81,6 +109,7 @@ const calculations = {
     needsCommonFunctions: false,
     hasImage: false,
     imagePath: "",
-    canFileUpload: false,
+    canFileUpload: true,
+    canParseGeojson: false
   },
 };

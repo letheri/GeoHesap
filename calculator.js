@@ -30,17 +30,34 @@ if (PARAMETER.ellipsoidUsage) {
     .getElementById("ellipsoid_btn")
     .getElementsByTagName("button");
   for (const i of ellipsoidBtns) {
-    i.addEventListener("click", () => {
-      if (!i.className.includes("btn-secondary")) {
-        const oldSelection = document.getElementsByClassName("btn-secondary");
-        oldSelection[0].classList.toggle("text-white");
-        oldSelection[0].classList.toggle("btn-secondary");
-        i.classList.toggle("text-white");
-        i.classList.toggle("btn-secondary");
-        currentEllipsoid = i.id;
-      }
-      console.log(currentEllipsoid);
-    });
+    if (i.id == 'custom_ell') {
+      document.getElementById('custom_ell_btn').addEventListener("click", ()=>{
+        const parameterA = $('#param_a')[0].value
+        const parameterB = $('#param_b')[0].value
+        if (parameterA && parameterB && !i.className.includes("btn-secondary")) {
+          console.log(i)
+          ellipsoids.custom = [parseFloat(parameterA),parseFloat(parameterB)];
+          const oldSelection = document.getElementsByClassName("btn-secondary");
+          oldSelection[0].classList.toggle("text-white");
+          oldSelection[0].classList.toggle("btn-secondary");
+          i.classList.toggle("text-white");
+          i.classList.toggle("btn-secondary");
+          currentEllipsoid = i.id;
+        }
+      })
+    } else if (i.id != 'custom_ell_btn') {
+      i.addEventListener("click", () => {
+        if (!i.className.includes("btn-secondary")) {
+          const oldSelection = document.getElementsByClassName("btn-secondary");
+          oldSelection[0].classList.toggle("text-white");
+          oldSelection[0].classList.toggle("btn-secondary");
+          i.classList.toggle("text-white");
+          i.classList.toggle("btn-secondary");
+          currentEllipsoid = i.id;
+        }
+        console.log(currentEllipsoid);
+      });
+    }
   }
 }
 
@@ -54,7 +71,7 @@ let fileUploaded = false;
 
 // Dynamic Input and Output Generation
 for (const i of PARAMETER.fieldNames) {
-  inputFields.innerHTML += `<div class="input-group col mx-3">
+  inputFields.innerHTML += `<div class="input-group col mx-0">
    <span class="input-group-text" id="inputtext_${i}">${i}</span>
    <input type="number" id="input${i}" class="form-control calc-inputs" placeholder="" aria-label="" aria-describedby="inputtext_${i}">
     </div>`;

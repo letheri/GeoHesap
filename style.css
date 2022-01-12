@@ -91,3 +91,21 @@ transition: all .5s ease-out;
 .descriptor {
   background-color: rgb(204, 203, 203);
 }
+.customEllipsoid {
+  display: inline;
+  width: inherit;
+  
+}
+
+.custom-para {
+  font-weight: bold;
+  padding-left: 5px;
+}
+
+#custom_ell_btn {
+  width: min-content;
+}
+
+.dropdown-menu{
+  border-color: #616161;
+}
