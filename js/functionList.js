@@ -41,6 +41,33 @@ const calculations = {
 
   proj2geo: {
     fullname: "Projected to Geographic",
+    functionFileName: "projected_ellipsoidal.js",
+    functionName: "sagYukari_to_cog",
+    ellipsoidUsage: true,
+    inputFields: 4,
+    fieldNames: ["Easting", "Northing", "UTM/TM"],
+    outputNames: ["Latitude", "Longitude", "Z"], // Order is important
+    canReverseCalculate: true,
+    reverseCalculationName: "geo2proj",
+    needsCommonFunctions: true,
+    hasImage: true,
+    imagePath: "/img/0.gif",
+    canFileUpload: true,
+  },
+  geo2proj: {
+    fullname: "Geographic to Projected",
+    functionFileName: "projected_ellipsoidal.js",
+    functionName: "to_SagYukari",
+    ellipsoidUsage: true,
+    inputFields: 4,
+    fieldNames: ["Latitude", "Longitude", "Central Meridian", "UTM/TM", 'N/S'],
+    outputNames: ["X", "Y", "Z"], // Order is important
+    canReverseCalculate: true,
+    reverseCalculationName: "proj2geo",
+    needsCommonFunctions: true,
+    hasImage: true,
+    imagePath: "/img/0.gif",
+    canFileUpload: true,
   },
 
   geodesicDirect: {
@@ -80,7 +107,7 @@ const calculations = {
   },
 
   datumTrans: {
-    fullname: "Datum Transformtions",
+    fullname: "Datum Transformations",
     functionFileName: "Cart2Geog.js",
     functionName: "xyz2ell",
     ellipsoidUsage: true,
