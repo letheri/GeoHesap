@@ -18,7 +18,8 @@ const calculations = {
     hasImage: true,
     imagePath: "/img/0.gif",
     canFileUpload: true,
-    canParseGeojson: false
+    canParseGeojson: false,
+    dataTypes: ['csv','Excel']
   },
 
   geo2xyz: {
@@ -36,7 +37,8 @@ const calculations = {
     imagePath: "/img/0.gif",
     canFileUpload: true,
     canParseGeojson: true,
-    geojsonTemplate: {"Latitude":0.0, "Longitude":0.0, "Height":0.0}
+    geojsonTemplate: {"Latitude":0.0, "Longitude":0.0, "Height":0.0},
+    dataTypes: ['csv','Excel','GeoJson']
   },
 
   proj2geo: {
@@ -46,7 +48,7 @@ const calculations = {
     ellipsoidUsage: true,
     inputFields: 4,
     fieldNames: ["Easting", "Northing", "UTM/TM"],
-    outputNames: ["Latitude", "Longitude", "Z"], // Order is important
+    outputNames: ["Latitude", "Longitude"], // Order is important
     canReverseCalculate: true,
     reverseCalculationName: "geo2proj",
     needsCommonFunctions: true,
@@ -61,7 +63,7 @@ const calculations = {
     ellipsoidUsage: true,
     inputFields: 4,
     fieldNames: ["Latitude", "Longitude", "Central Meridian", "UTM/TM", 'N/S'],
-    outputNames: ["X", "Y", "Z"], // Order is important
+    outputNames: ["Easting", "Northing"], // Order is important
     canReverseCalculate: true,
     reverseCalculationName: "proj2geo",
     needsCommonFunctions: true,
@@ -106,23 +108,6 @@ const calculations = {
     canParseGeojson: false
   },
 
-  datumTrans: {
-    fullname: "Datum Transformations",
-    functionFileName: "Cart2Geog.js",
-    functionName: "xyz2ell",
-    ellipsoidUsage: true,
-    inputFields: 3,
-    fieldNames: ["X", "Y", "Z"], // Order is important
-    //fieldUnits: ["meters","meters","meters"],
-    outputNames: ["Latitude", "Longitude", "height"],
-    canReverseCalculate: true,
-    reverseCalculationName: "geo2xyz",
-    needsCommonFunctions: true,
-    hasImage: true,
-    imagePath: "/img/0.gif",
-    canFileUpload: true,
-  },
-
   julian: {
     fullname: "Julian Date",
     functionFileName: "Julian.js",
@@ -138,5 +123,8 @@ const calculations = {
     imagePath: "",
     canFileUpload: true,
     canParseGeojson: false
-  },
+  }, 
+  test: {
+
+  }
 };

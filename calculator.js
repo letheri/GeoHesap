@@ -64,17 +64,42 @@ if (PARAMETER.ellipsoidUsage) {
 // Input Field Elements
 const inputFields = document.getElementById("inputFields");
 // Output Field Elements
-const enteredValues = document.getElementById("enteredValues");
+const enteredValues = document.getElementById("printedEnteredValues");
 const resultingValues = document.getElementById("resultingValues");
 //enteredValues.innerHTML = `<ol class="col" id ='entry${i}'></ol>`
 let fileUploaded = false;
+const inputElements = document.getElementsByClassName("calc-inputs");
+const calculationResultElement = document.getElementById("results_text");
+let coordinateList = []; // all coordinate inputs
+let converterRan = false;
+let currentFileType = 'csv'
 
 // Dynamic Input and Output Generation
 for (const i of PARAMETER.fieldNames) {
-  inputFields.innerHTML += `<div class="input-group col mx-0">
-   <span class="input-group-text" id="inputtext_${i}">${i}</span>
-   <input type="number" id="input${i}" class="form-control calc-inputs" placeholder="" aria-label="" aria-describedby="inputtext_${i}">
-    </div>`;
+  if (i == 'N/S') {
+    inputFields.innerHTML +=`<div class="input-group col mx-0">
+    <span class="input-group-text" id="inputtext_${i}">${i}</span>
+    <select class="" id="nsSelector">
+      <option value="true">N</option>
+      <option value="false">S</option>
+    </select>
+     </div>
+     <input type="text" id="input${i}" class="d-none calc-inputs" >`
+  } else if (i == 'UTM/TM') {
+    inputFields.innerHTML +=`<div class="input-group col mx-0">
+    <span class="input-group-text" id="inputtext_${i}">${i}</span>
+    <select class="" id="utmSelector">
+      <option value="6">UTM</option>
+      <option value="3">TM</option>
+    </select>
+     </div>
+     <input type="number" id="input${i}" class="d-none calc-inputs" >`
+  } else {
+    inputFields.innerHTML += `<div class="input-group col mx-0">
+     <span class="input-group-text" id="inputtext_${i}">${i}</span>
+     <input type="number" id="input${i}" class="form-control calc-inputs" placeholder="" aria-label="" aria-describedby="inputtext_${i}">
+      </div>`;
+  }
   enteredValues.innerHTML += `<ol class="col" id ='entry${i}'><p>${i}</p></ol>`;
 }
 for (const i of PARAMETER.outputNames) {
@@ -87,15 +112,15 @@ if (PARAMETER.canFileUpload) {
 }
 
 function checkFilledInputs() {
+  // Checks if any input field is empty
   let check = true;
-  if (fileUploaded) {
-    return check;
-  }
-  for (const i of inputList) {
+
+  for (const i of inputElements) {
     if (!i.value) {
-      i.style.border = "1px solid red";
-      calculationResultElement.firstElementChild.innerHTML =
-        "<li>Please fill the fields!</li>";
+      if(!fileUploaded && !coordinateList.length){
+        i.style.border = "1px solid red";
+        alert('Please fill all the fields!')
+      }
       check = false;
     }
   }
@@ -103,19 +128,17 @@ function checkFilledInputs() {
 }
 
 function readFields() {
-  //clear input elements
-  //for (var member in fields) delete fields[member];
-  const fields = {};
+  const inputData = {};
   // create fields
   if (checkFilledInputs()) {
-    for (const i of inputList) {
+    for (const i of inputElements) {
       const fieldElementName = i.id.replace("input", "");
-      fields[fieldElementName] = i.value;
+      inputData[fieldElementName] = i.value;
       i.value = "";
     }
     // console.log(coordinateList[0]["X"]);
-    coordinateList.push(fields);
-    console.log(coordinateList);
+    coordinateList.push(inputData);
+    console.log('New Input:',inputData);
   }
 }
 
@@ -138,13 +161,13 @@ function printEnteredValues(upload = {}) {
       document.getElementById("entry" + j).appendChild(entryItem);
     }
   }
-  while (coordinateList.length > 1) {
-    coordinateList.pop();
-  }
+  
 }
 
 function printResultValues() {
-  resultingValues.classList.toggle("visually-hidden");
+  if (!converterRan) {
+    resultingValues.classList.toggle("visually-hidden");
+  }
   //resultingValues.innerHTML += '<li></li>';
   //for (const colName of PARAMETER.outputNames) {}
   for (const i of coordinateList) {
@@ -160,6 +183,9 @@ function printResultValues() {
         .getElementById("result" + PARAMETER.outputNames[r])
         .appendChild(resultItem);
     }
+  }
+  while (coordinateList.length > 1) {
+    coordinateList.pop();
   }
   //calculationResultElement.innerHTML = "<ol class='row'>" + resultText + "</ol>";
   converterRan = true;
@@ -181,15 +207,24 @@ function reset_calculator(softReset = false) {
   if (softReset) {
     return;
   }
-  for (const i of inputList) {
+  for (const i of inputElements) {
     i.value = "";
   }
 }
 
-const inputList = document.getElementsByClassName("calc-inputs");
-const calculationResultElement = document.getElementById("results_text");
-let coordinateList = []; // all coordinate inputs
-let converterRan = false;
+function convertBtnHandler(){
+  if (checkFilledInputs()) {
+    readFields();
+    printEnteredValues();
+  }
+  if (coordinateList.length) {
+    // converterRan = true;
+    printResultValues();
+    //resultTextBox.innerHTML = "<ol class='row'>" + resultText + "</ol>";
+  }
+}
+
+
 
 // Add new coordinate button
 const addCoordsBtn = document.getElementById("addCoords");
@@ -204,17 +239,7 @@ addCoordsBtn.addEventListener("click", () => {
 // Convert button
 const convertBtn = document.getElementById("convertBtn");
 convertBtn.addEventListener("click", () => {
-  if (checkFilledInputs()) {
-    readFields();
-    printEnteredValues();
-  }
-  if (coordinateList.length) {
-    // converterRan = true;
-    printResultValues();
-    //resultTextBox.innerHTML = "<ol class='row'>" + resultText + "</ol>";
-  } else {
-    readFields();
-  }
+  convertBtnHandler();
 });
 let fileList;
 // FILE HANDLER - BROKEN ??
@@ -304,9 +329,69 @@ function geojson_find_datum(object) {
   }
 }
 
-const inputElement = document.getElementById("file_upload");
-inputElement.addEventListener("change", handleFiles, false);
+const uploadElement = document.getElementById("file_upload");
+uploadElement.addEventListener("change", handleFiles, false);
 
 document.getElementById("resetBtn").addEventListener("click", () => {
   reset_calculator();
 });
+
+
+if (PARAMETER.fieldNames.includes('N/S')) {
+  const el = document.getElementById('nsSelector')
+  el.addEventListener('click', ()=>{
+    console.log(el.value)
+    if ( el.value == '3'){
+      document.getElementById('inputN/S').value = 3;
+    } else {
+      document.getElementById('inputN/S').value = 6;
+    }
+  })
+} else if (PARAMETER.fieldNames.includes('UTM/TM')) {
+  const el = document.getElementById('utmSelector')
+  el.addEventListener('click', ()=>{
+    console.log(el.value)
+    if ( el.value == 'true'){
+      document.getElementById('inputN/S').value = true;
+    } else {
+      document.getElementById('inputN/S').value = false;
+    }
+  })
+}
+
+const btnArea = document.getElementById('dataTypeBtns')
+for (const btn of PARAMETER.dataTypes) {
+  btnArea.innerHTML += `
+<button class="btn btn-outline-dark data-type-btn" id="${btn}Btn">${btn}</button>`
+}
+const dataTypeBtns = document.getElementsByClassName('data-type-btn');
+dataTypeBtns[0].classList.toggle('btn-secondary')
+for (const btn of dataTypeBtns) {
+  btn.addEventListener('click', ()=>{
+    const currentlySelectedBtn = btnArea.getElementsByClassName('btn-secondary')[0]
+    if (btn.id == currentlySelectedBtn.id){
+      return
+    }
+    currentlySelectedBtn.classList.toggle('btn-secondary');
+    btn.classList.toggle('btn-secondary');
+    currentFileType = btn.id.replace('Btn', '')
+    uploadSetter(currentFileType);
+
+  })
+}
+
+function uploadSetter(currentFileType){
+  switch (currentFileType){
+    case 'csv':
+      uploadElement.accept = '.csv';
+      break;
+    case 'GeoJson':
+      uploadElement.accept = '.json, .geojson';
+      break;
+    case 'Excel':
+      uploadElement.accept = '.xls, .xlsx';
+      break
+
+  }
+    
+}

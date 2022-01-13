@@ -60,7 +60,7 @@
         </ul>
       </header>
     </div>
-
+    <div class="container">
     <!-- BODY -->
     <!-- title -->
     <div class="row" id="">
@@ -93,7 +93,7 @@
     </div> -->
     
     <!-- ellisoids2 -->
-    <div class="row visually-hidden" id="ellipsoid_btn">
+    <div class="row visually-hidden mt-3" id="ellipsoid_btn">
       <div class="btn-group">
         <button
           class="btn btn-outline-dark btn-secondary text-white"
@@ -124,7 +124,7 @@
       </div>
     </div>
     <!-- file upload -->
-    <div class="row text-center mt-1 visually-hidden" id="fileUpload">
+    <!-- <div class="row text-center mt-1 visually-hidden" id="fileUpload">
       <p id="uploadedFileName"></p>
       <div class="col align-self-center">
         <input type="file" id="file_upload">
@@ -134,12 +134,12 @@
           Upload
         </button>
       </div>
-    </div>
+    </div> -->
     <!-- results -->
     <div class="row text-center mt-5">
       <div class="row" id="results_text">
         <div class="col" >
-          <div class="row" id="enteredValues">
+          <div class="row" id="printedEnteredValues">
           </div>
         </div>
         <div class="col visually-hidden" id="resultingValues">
@@ -148,20 +148,57 @@
           </div>
         </div>
       </div>
-      <div class="row">
-        <div class="col">
-          <button type="submit" class="btn btn-primary my-3 float-end" id="convertBtn">
+      <div class="">
+
+          <button type="submit" class="btn btn-primary my-3 " data-bs-toggle="modal" data-bs-target="#staticBackdrop" id="uploadBtn">
+            Upload
+          </button>
+
+        <!-- <div class="col">
+        </div> -->
+          <button type="submit" class="btn btn-primary my-3 " id="convertBtn">
             Convert
           </button>
-        </div>
-        <div class="col">
-          <button type="submit" class="btn btn-primary my-3 float-start" id="resetBtn">
+        
+
+          <button type="submit" class="btn btn-primary my-3 " id="resetBtn">
             Reset
           </button>
 
+      </div>
+    </div>
+    <!-- File Upload Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">File Uploader</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body" style="align-self: center;text-align: center;">
+            <div class="btn-group" id = 'dataTypeBtns'>
+                                          
+            </div>
+            <div class="row text-center mt-1 visually-hidden" id="fileUpload">
+              <p id="uploadedFileName"></p>
+              <div class="col align-self-center m-5 border-dark ">
+                <input type="file" accept=".csv" id="file_upload">
+              </div>
+            </div>
+            <div class="col">
+              <button type="submit" class="btn btn-primary my-5" id="uploadBtn">
+                Process
+              </button>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <!-- <button type="button" class="btn btn-primary">Understood</button> -->
+          </div>
         </div>
       </div>
     </div>
+  </div>
     <div class="container">
       <footer class="d-flex flex-wrap justify-content-evenly align-items-center py-3 my-4 border-top" >
         <div class="col-md-3 col-sm-2 d-flex align-items-end">
