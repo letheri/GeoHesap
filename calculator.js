@@ -256,6 +256,7 @@ function handleFiles() {
     if (fileList[0].name.includes(".csv")) {
       data = $.csv.toObjects(fileContent);
       fileType = 'csv';
+      console.log(data)
     } else if (
       fileList[0].name.includes(".geojson") &&
       PARAMETER.canParseGeojson
@@ -270,7 +271,7 @@ function handleFiles() {
     if (checkDataValidity(data)) {
       printEnteredValues(data);
     } else {
-      alert("Can't read the file!");
+      reset_calculator(true);
     }
     // for(const i of data) {
     //   printEnteredValues(i)
@@ -280,13 +281,15 @@ function handleFiles() {
 
 function checkDataValidity(parsedJson) {
   //console.log(parsedJson);
-  if (!parsedJson) {
+  if (!parsedJson[0]) {
+    alert("Can't read the file!");
     return false;
   }
   for (const line of parsedJson) {
     for (const input of PARAMETER.fieldNames) {
       console.log(line[input]);
       if (!line[input] && line[input] !== 0) {
+        alert("File has corrupt coordinate data!")
         return false;
       }
     }
