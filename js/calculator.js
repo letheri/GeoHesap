@@ -222,6 +222,7 @@ function reset_calculator(softReset = false) {
   }
   if (converterRan) {
     resultingValues.classList.toggle("visually-hidden");
+    downloadBtn.classList.toggle("visually-hidden");
   }
   converterRan = false;
   tableElement.innerHTML = tableElement.firstElementChild;
