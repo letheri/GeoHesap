@@ -9,6 +9,7 @@ const calculations = {
     functionName: "xyz2ell",
     ellipsoidUsage: true,
     inputFields: 3,
+    outputFields:3,
     fieldNames: ["X", "Y", "Z"], // Order is important
     //fieldUnits: ["meters","meters","meters"],
     outputNames: ["Latitude", "Longitude", "Height"],
@@ -28,6 +29,7 @@ const calculations = {
     functionName: "ell2xyz",
     ellipsoidUsage: true,
     inputFields: 3,
+    outputFields:3,
     fieldNames: ["Latitude", "Longitude", "Height"],
     outputNames: ["X", "Y", "Z"], // Order is important
     canReverseCalculate: true,
@@ -46,7 +48,8 @@ const calculations = {
     functionFileName: "projected_ellipsoidal.js",
     functionName: "sagYukari_to_cog",
     ellipsoidUsage: true,
-    inputFields: 4,
+    inputFields: 3,
+    outputFields:2,
     fieldNames: ["Easting", "Northing", "UTM/TM"],
     outputNames: ["Latitude", "Longitude"], // Order is important
     canReverseCalculate: true,
@@ -55,13 +58,15 @@ const calculations = {
     hasImage: true,
     imagePath: "/img/0.gif",
     canFileUpload: true,
+    dataTypes: ['csv','Excel']
   },
   geo2proj: {
     fullname: "Geographic to Projected",
     functionFileName: "projected_ellipsoidal.js",
     functionName: "to_SagYukari",
     ellipsoidUsage: true,
-    inputFields: 4,
+    inputFields: 5,
+    outputFields:2,
     fieldNames: ["Latitude", "Longitude", "Central Meridian", "UTM/TM", 'N/S'],
     outputNames: ["Easting", "Northing"], // Order is important
     canReverseCalculate: true,
@@ -70,14 +75,16 @@ const calculations = {
     hasImage: true,
     imagePath: "/img/0.gif",
     canFileUpload: true,
+    dataTypes: ['csv','Excel']
   },
 
   geodesicDirect: {
-    fullname: "Direct Geodesic",
+    fullname: "Fundamental Problem (Direct)",
     functionFileName: "fundamental.js",
     functionName: "firstFund",
     ellipsoidUsage: true,
     inputFields: 4,
+    outputFields:3,
     fieldNames: ["Latitude", "Longitude","Distance", "Azimuth"], // Order is important
     //fieldUnits: ["meters","meters","meters"],
     outputNames: ["Latitude", "Longitude", "Azimuth"],
@@ -87,15 +94,17 @@ const calculations = {
     //hasImage: true,
     //imagePath: "/img/0.gif",
     canFileUpload: true,
-    canParseGeojson: false
+    canParseGeojson: false,
+    dataTypes: ['csv','Excel']
   },
 
   geodesicInverse: {
-    fullname: "Inverse Geodesic",
+    fullname: "Fundamental Problem (Inverse)",
     functionFileName: "fundamental.js",
     functionName: "secFund",
     ellipsoidUsage: true,
     inputFields: 4,
+    outputFields:3,
     fieldNames: ["Latitude1", "Longitude1","Latitude2", "Longitude2"], // Order is important
     //fieldUnits: ["meters","meters","meters"],
     outputNames: ["Azimuth1", "Azimuth2", "Distance"],
@@ -105,7 +114,8 @@ const calculations = {
     //hasImage: true,
     //imagePath: "/img/0.gif",
     canFileUpload: true,
-    canParseGeojson: false
+    canParseGeojson: false,
+    dataTypes: ['csv','Excel']
   },
 
   julian: {
@@ -114,6 +124,7 @@ const calculations = {
     functionName: "JulianDate",
     ellipsoidUsage: false,
     inputFields: 6,
+    outputFields:1,
     fieldNames: ["Year", "Month", "Day", "Hour", "Minute", "Second"],
     outputNames: ["Julian Date"],
     canReverseCalculate: false,
@@ -122,9 +133,7 @@ const calculations = {
     hasImage: false,
     imagePath: "",
     canFileUpload: true,
-    canParseGeojson: false
-  }, 
-  test: {
-
+    canParseGeojson: false,
+    dataTypes: ['csv','Excel']
   }
 };

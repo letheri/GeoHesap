@@ -6,7 +6,7 @@ function addScript(src) {
   document.body.appendChild(s);
 }
 if (PARAMETER) {
-  addScript("/js/" + PARAMETER.functionFileName);
+  addScript("/js/functions/" + PARAMETER.functionFileName);
 } else {
   window.location.href = "error.html";
 }
@@ -72,7 +72,11 @@ const inputElements = document.getElementsByClassName("calc-inputs");
 const calculationResultElement = document.getElementById("results_text");
 let coordinateList = []; // all coordinate inputs
 let converterRan = false;
-let currentFileType = 'csv'
+let currentFileType = 'csv';
+let parsedFileData;
+
+//
+const resultSet = [];
 
 // Dynamic Input and Output Generation
 for (const i of PARAMETER.fieldNames) {
@@ -144,13 +148,22 @@ function readFields() {
 
 function processData(rawData) {
   const preprocessed = [];
+  const inputOutput = {};
   for (const i of PARAMETER.fieldNames) {
     preprocessed.push(rawData[i]); // put preprocessed data in the right order
   }
-  return window[PARAMETER.functionName](...preprocessed); //window["functionName"](), calls function named functionName()
+  const output = window[PARAMETER.functionName](...preprocessed) //window["functionName"](), calls function named functionName()
+  inputOutput['input'] = preprocessed;
+  inputOutput['output'] = output;
+  resultSet.push(inputOutput);
+  return output; 
 }
 
 function printEnteredValues(upload = {}) {
+  clearPrintedCoordinates();
+  if (enteredValues.parentElement.classList.contains('visually-hidden')){
+    enteredValues.parentElement.classList.toggle('visually-hidden')
+  }
   if (Object.keys(upload).length) {
     coordinateList = upload;
   }
@@ -191,24 +204,35 @@ function printResultValues() {
   converterRan = true;
 }
 
-function reset_calculator(softReset = false) {
-  coordinateList = [];
-  fileUploaded = false;
+function clearPrintedCoordinates(){
   for (const e of PARAMETER.fieldNames) {
     document.getElementById("entry" + e).innerHTML = `<p>${e}</p>`;
   }
   for (const r of PARAMETER.outputNames) {
     document.getElementById("result" + r).innerHTML = `<p>${r}</p>`;
   }
+}
+
+function reset_calculator(softReset = false) {
+  coordinateList = [];
+  fileUploaded = false;
+  clearPrintedCoordinates();
+  if (!enteredValues.parentElement.classList.contains('visually-hidden')){
+    enteredValues.parentElement.classList.toggle('visually-hidden')
+  }
   if (converterRan) {
     resultingValues.classList.toggle("visually-hidden");
   }
   converterRan = false;
+  tableElement.innerHTML = tableElement.firstElementChild;
   if (softReset) {
     return;
   }
   for (const i of inputElements) {
     i.value = "";
+  }
+  while (resultSet.length > 1) {
+    resultSet.pop();
   }
 }
 
@@ -221,6 +245,7 @@ function convertBtnHandler(){
     // converterRan = true;
     printResultValues();
     //resultTextBox.innerHTML = "<ol class='row'>" + resultText + "</ol>";
+    downloadBtn.classList.toggle('visually-hidden')
   }
 }
 
@@ -268,11 +293,10 @@ function handleFiles() {
       alert("Invalid File!");
     }
     console.log(data);
-    if (checkDataValidity(data)) {
-      printEnteredValues(data);
-    } else {
-      reset_calculator(true);
-    }
+    document.getElementById('fileUploadStatus').innerText = `${data.length} coordinates were uploaded!`;
+    parsedFileData = data;
+    
+    
     // for(const i of data) {
     //   printEnteredValues(i)
     // }
@@ -289,7 +313,7 @@ function checkDataValidity(parsedJson) {
     for (const input of PARAMETER.fieldNames) {
       console.log(line[input]);
       if (!line[input] && line[input] !== 0) {
-        alert("File has corrupt coordinate data!")
+        alert("File has invalid coordinate data!")
         return false;
       }
     }
@@ -316,7 +340,6 @@ function geojson_parse(json) {
       coordinates.push(coord);
     }
   }
-  console.log(coordinates);
   return coordinates;
 }
 
@@ -397,4 +420,65 @@ function uploadSetter(currentFileType){
 
   }
     
+}
+
+
+// table generation for excel export
+const tableElement = document.getElementById('excel_table').getElementsByTagName('tbody')[0];
+tableElement.innerHTML = `<tr data-height="25">
+<td class="" colspan='${PARAMETER.inputFields}' data-f-sz="20" data-f-color="ED6363" data-a-h="center" data-a-v="middle">Input Coordinates</td>
+<td class="" colspan='${PARAMETER.outputFields}' data-f-sz="20" data-f-color="003545" data-a-h="center" data-a-v="middle">Output Results</td>
+</tr>`;
+const columnsTableElement = document.createElement('tr')
+columnsTableElement.id='table_headers'
+for (const i of PARAMETER.fieldNames){
+  //const row = tableElement.getElementById('table_headers');
+  columnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="16" data-f-color="ED6363" data-a-h="center" data-a-v="middle">${i}</td>`
+}
+for (const i of PARAMETER.outputNames){
+  //const row = tableElement.getElementById('table_headers');
+  columnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="16" data-f-color="00454A" data-a-h="center" data-a-v="middle">${i}</td>`
+}
+tableElement.appendChild(columnsTableElement);
+
+function convertExcel() {
+  for (const j of resultSet) {
+    const newColumnsTableElement = document.createElement('tr')
+    for (const i of j.input){
+      //const row = tableElement.getElementById('table_headers');
+      newColumnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="12" data-f-color="ED6363" data-a-h="center" data-a-v="middle">${i}</td>`
+    }
+    for (const i of j.output){
+      //const row = tableElement.getElementById('table_headers');
+      newColumnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="12" data-f-color="3C6562" data-a-h="center" data-a-v="middle">${i}</td>`
+    }
+    tableElement.appendChild(newColumnsTableElement)
+  }
+
+}
+
+const downloadBtn = document.getElementById('downloadBtn');
+downloadBtn.addEventListener('click', ()=>{
+  convertExcel();
+  TableToExcel.convert(tableElement.parentElement)
+})
+
+document.getElementById('importModalBtn').addEventListener('click', ()=>{
+  coordinateList = coordinateList.concat(parsedFileData);      
+  if (checkDataValidity(parsedFileData)) {
+      printEnteredValues(parsedFileData);
+    } else {
+      reset_calculator(true);
+    }
+})
+
+
+function alert(text) {
+  if (document.getElementsByClassName('alert').length) {
+    return
+  }
+  document.getElementById('alert_box').innerHTML = `<div class='alert alert-danger alert-dismissible show fade' role='alert' ><strong>
+  ${text}</strong>
+  <button type='button' class='btn-close' data-bs-dismiss='alert' data-bs-f aria-label='Close'></button>
+  </div>` 
 }
