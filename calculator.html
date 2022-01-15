@@ -4,17 +4,19 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="./img/logo.png">
     
     <title>GeoHesap</title>
-    <!-- Bootstrap -->
+    <!-- Bootstrap https://getbootstrap.com/ -->
     <link href="./css/libs/bootstrap.min.css" rel="stylesheet"/>
     <script type="text/javascript" src="./js/libs/bootstrap.bundle.min.js"></script>
-    <!-- Bootstrap Icons -->
+    <!-- Bootstrap Icons https://icons.getbootstrap.com/ -->
     <link rel="stylesheet" href="./css/libs/bootstrap-icons.css">
-    <!-- Turf.js -->
+    <!-- Turf.js https://turfjs.org/ -->
     <script type="text/javascript" src='./js/libs/turf.min.js'></script>
-    <!-- JQuery -->
+    <!-- JQuery v3.3.1 https://jquery.com/ -->
     <script type="text/javascript" src="./js/libs/jquery-3.3.1.slim.js"></script>
+    <!-- JQuery CSV https://github.com/evanplaice/jquery-csv -->
     <script type="text/javascript" src="./js/libs/jquery.csv.js"></script>
     <!-- TableToExcel -- https://github.com/linways/table-to-excel -->
     <script type="text/javascript" src="./js/libs/tableToExcel.js"></script>
@@ -60,32 +62,6 @@
       <h3 class="title text-center" id="titleEl"></h3>      
     </div>
     <!-- ellisoids -->
-    <!-- <div class="row visually-hidden" id="ellipsoid_btn">
-      <div class="col text-center">
-        <button
-          class="btn btn-outline-dark btn-secondary text-white"
-          id="wgs84"
-        >
-          WGS-84
-        </button>
-      </div>
-      <div class="col text-center">
-        <button class="btn btn-outline-dark" id="grs80">GRS-80</button>
-      </div>
-      <div class="col text-center">
-        <button class="btn btn-outline-dark" id="hayford">Hayford</button>
-      </div>
-      <div class="col text-center">
-        <button class="btn btn-outline-dark" id="krass40">Krass-40</button>
-      </div>
-      <div class="col deactive text-center">
-        <button class="btn btn-outline-dark" id="custom_ell">
-          Custom
-        </button>
-      </div>
-    </div> -->
-    
-    <!-- ellisoids2 -->
     <div class="row visually-hidden mt-3" id="ellipsoid_btn">
       <div class="btn-group">
         <button
@@ -172,8 +148,9 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body" style="align-self: center;text-align: center;">
+            <p class="text-start p-2 bg-warning " style="border-radius: 5px;" id='uploaderDesc'></p>
+                           
             <div class="btn-group" id = 'dataTypeBtns'>
-                                          
             </div>
             <div class="row text-center mt-1 visually-hidden" id="fileUpload">
               <div class="col align-self-center m-5 border-dark ">

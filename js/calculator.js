@@ -20,7 +20,7 @@ if (PARAMETER.needsCommonFunctions) {
 const title = document.getElementById("titleEl");
 title.innerHTML = PARAMETER.fullname;
 if (PARAMETER.canReverseCalculate) {
-  title.innerHTML += `<a class="bi bi-arrow-left-right p-1 px-2" href="calculator.html?c=${PARAMETER.reverseCalculationName}" id="functionSwitch"></a>`;
+  title.innerHTML += `<a class="bi bi-arrow-left-right p-1 mx-2 px-2" href="calculator.html?c=${PARAMETER.reverseCalculationName}" id="functionSwitch"></a>`;
 }
 
 // Ellipsoid Field Elements
@@ -483,3 +483,15 @@ function alert(text) {
   <button type='button' class='btn-close' data-bs-dismiss='alert' data-bs-f aria-label='Close'></button>
   </div>` 
 }
+
+
+let text = `<strong>For CSV:</strong> File has to start with column names of ${PARAMETER.fieldNames[0]}`
+for (const j of PARAMETER.fieldNames.slice(1,PARAMETER.inputFields)) {
+  text += ` ,${j}` 
+}
+text += `. Seperated by commas.<br>Each row has have exactly ${PARAMETER.inputFields} columns of coordinates.`
+if (PARAMETER.canParseGeojson){
+  text += '<br><strong>For GeoJson:</strong> Calculator assumes the Datum as WGS84.'
+}
+PARAMETER.uploadDescription = text;
+document.getElementById('uploaderDesc').innerHTML = text;

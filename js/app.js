@@ -13,7 +13,7 @@ for (const i in calculations) {
     </li>
   <div class="collapse align-self-center " id="detail${i}">
     <div class="card card-body descriptor" style="">
-      Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+    ${PARAMETER.description}
     </div>
   </div>
   

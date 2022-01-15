@@ -2,6 +2,7 @@ let currentCalculator = window.location.href.split("?c=")[1] || "";
 if (!window.location.href.includes("index") && currentCalculator == "") {
   window.location.href = "error.html";
 }
+
 const calculations = {
   xyz2geo: {
     fullname: "XYZ to Geographic",
@@ -11,13 +12,12 @@ const calculations = {
     inputFields: 3,
     outputFields:3,
     fieldNames: ["X", "Y", "Z"], // Order is important
-    //fieldUnits: ["meters","meters","meters"],
     outputNames: ["Latitude", "Longitude", "Height"],
     canReverseCalculate: true,
     reverseCalculationName: "geo2xyz",
     needsCommonFunctions: true,
-    hasImage: true,
-    imagePath: "/img/0.gif",
+    description: "Convert Cartesian coordinates to Geographic coordinates.",
+    uploadDescription: '',
     canFileUpload: true,
     canParseGeojson: false,
     dataTypes: ['csv','Excel']
@@ -35,14 +35,14 @@ const calculations = {
     canReverseCalculate: true,
     reverseCalculationName: "xyz2geo",
     needsCommonFunctions: true,
-    hasImage: true,
-    imagePath: "/img/0.gif",
+    description: "Convert Geographic coordinates to Cartesian coordinates.",
+    uploadDescription: '',
     canFileUpload: true,
     canParseGeojson: true,
     geojsonTemplate: {"Latitude":0.0, "Longitude":0.0, "Height":0.0},
     dataTypes: ['csv','Excel','GeoJson']
-  },
-
+  }
+,
   proj2geo: {
     fullname: "Projected to Geographic",
     functionFileName: "projected_ellipsoidal.js",
@@ -55,9 +55,10 @@ const calculations = {
     canReverseCalculate: true,
     reverseCalculationName: "geo2proj",
     needsCommonFunctions: true,
-    hasImage: true,
-    imagePath: "/img/0.gif",
+    description: "Convert Projected Map coordinates to Geographic coordinates.",
+    uploadDescription: '',
     canFileUpload: true,
+    canParseGeojson: false,
     dataTypes: ['csv','Excel']
   },
   geo2proj: {
@@ -72,9 +73,10 @@ const calculations = {
     canReverseCalculate: true,
     reverseCalculationName: "proj2geo",
     needsCommonFunctions: true,
-    hasImage: true,
-    imagePath: "/img/0.gif",
+    description: "Convert Geographic coordinates to Projected Map coordinates.",
+    uploadDescription: '',
     canFileUpload: true,
+    canParseGeojson: false,
     dataTypes: ['csv','Excel']
   },
 
@@ -86,13 +88,12 @@ const calculations = {
     inputFields: 4,
     outputFields:3,
     fieldNames: ["Latitude", "Longitude","Distance", "Azimuth"], // Order is important
-    //fieldUnits: ["meters","meters","meters"],
     outputNames: ["Latitude", "Longitude", "Azimuth"],
     canReverseCalculate: true,
     reverseCalculationName: "geodesicInverse",
     needsCommonFunctions: true,
-    //hasImage: true,
-    //imagePath: "/img/0.gif",
+    description: "Calculate coordinates of a point with azimuth and geodesic distance.",
+    uploadDescription: '',
     canFileUpload: true,
     canParseGeojson: false,
     dataTypes: ['csv','Excel']
@@ -106,13 +107,12 @@ const calculations = {
     inputFields: 4,
     outputFields:3,
     fieldNames: ["Latitude1", "Longitude1","Latitude2", "Longitude2"], // Order is important
-    //fieldUnits: ["meters","meters","meters"],
     outputNames: ["Azimuth1", "Azimuth2", "Distance"],
     canReverseCalculate: true,
     reverseCalculationName: "geodesicDirect",
     needsCommonFunctions: true,
-    //hasImage: true,
-    //imagePath: "/img/0.gif",
+    description: "Calculate azimuth between two points and their geodesic distance.",
+    uploadDescription: '',
     canFileUpload: true,
     canParseGeojson: false,
     dataTypes: ['csv','Excel']
@@ -130,10 +130,12 @@ const calculations = {
     canReverseCalculate: false,
     reverseCalculationName: "",
     needsCommonFunctions: false,
-    hasImage: false,
-    imagePath: "",
+    description: "Calculate azimuth between two points and their geodesic distance.",
+    uploadDescription: '',
     canFileUpload: true,
     canParseGeojson: false,
     dataTypes: ['csv','Excel']
   }
 };
+
+
