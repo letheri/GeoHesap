@@ -6,14 +6,14 @@ function addScript(src) {
   document.body.appendChild(s);
 }
 if (PARAMETER) {
-  addScript("/js/functions/" + PARAMETER.functionFileName);
+  addScript("./js/functions/" + PARAMETER.functionFileName);
 } else {
   window.location.href = "error.html";
 }
 
 // Common Function Import
 if (PARAMETER.needsCommonFunctions) {
-  addScript("/js/common.js");
+  addScript("./js/common.js");
 }
 
 // Title Construction
