@@ -68,7 +68,7 @@ const calculations = {
     ellipsoidUsage: true,
     inputFields: 5,
     outputFields:2,
-    fieldNames: ["Latitude", "Longitude", "Central Meridian", "UTM/TM", 'N/S'],
+    fieldNames: ["Latitude", "Longitude", "Meridian", "UTM/TM", 'N/S'],
     outputNames: ["Easting", "Northing"], // Order is important
     canReverseCalculate: true,
     reverseCalculationName: "proj2geo",
