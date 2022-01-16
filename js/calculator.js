@@ -63,6 +63,9 @@ if (PARAMETER.ellipsoidUsage) {
 
 // Input Field Elements
 const inputFields = document.getElementById("inputFields");
+// Description Field
+document.getElementById('calculationInfo').innerHTML = PARAMETER.description
+
 // Output Field Elements
 const enteredValues = document.getElementById("printedEnteredValues");
 const resultingValues = document.getElementById("resultingValues");
