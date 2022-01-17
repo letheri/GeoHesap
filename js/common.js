@@ -1,11 +1,11 @@
 function radians_to_degrees(radians) {
   var pi = Math.PI;
-  return radians * (180/pi);
+  return radians * (180 / pi);
 }
 
 function degree_to_radians(degree) {
   var pi = Math.PI;
-  return degree * (pi/180);
+  return degree * (pi / 180);
 }
 
 const ellipsoids = {
@@ -14,6 +14,6 @@ const ellipsoids = {
   grs80: [6378137, 6356752.31414],
   hayford: [6378388, 6356911.9461],
   krass40: [6378245, 6356863.019],
-  custom: []
+  custom: [],
 };
 let currentEllipsoid = "wgs84";

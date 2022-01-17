@@ -1,8 +1,6 @@
-
-const indexCalculationList = document.getElementById('calculationIndexList');
+const indexCalculationList = document.getElementById("calculationIndexList");
 for (const i in calculations) {
   const PARAMETER = calculations[i];
-
 
   indexCalculationList.innerHTML += `
   <li class='list-group-item d-flex mx-2 mb-2 functionBtn' style='background-color:gray'>
@@ -17,19 +15,16 @@ for (const i in calculations) {
     </div>
   </div>
   
-  `
-  
-
+  `;
 }
 
 for (const i of document.getElementsByClassName("collapse")) {
-  const siblingList = i.previousElementSibling
-  siblingList.getElementsByClassName('bi')[0].addEventListener("click", ()=>{
-    siblingList.classList.toggle('mb-2');
-    siblingList.classList.toggle('functionBtn')
-    i.classList.toggle('mb-2')
-  })
+  const siblingList = i.previousElementSibling;
+  siblingList.getElementsByClassName("bi")[0].addEventListener("click", () => {
+    siblingList.classList.toggle("mb-2");
+    siblingList.classList.toggle("functionBtn");
+    i.classList.toggle("mb-2");
+  });
 }
 
 //calcList.innerHTML = processor_html;
-

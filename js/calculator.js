@@ -30,22 +30,32 @@ if (PARAMETER.ellipsoidUsage) {
     .getElementById("ellipsoid_btn")
     .getElementsByTagName("button");
   for (const i of ellipsoidBtns) {
-    if (i.id == 'custom_ell') {
-      document.getElementById('custom_ell_btn').addEventListener("click", ()=>{
-        const parameterA = $('#param_a')[0].value
-        const parameterB = $('#param_b')[0].value
-        if (parameterA && parameterB && !i.className.includes("btn-secondary")) {
-          console.log(i)
-          ellipsoids.custom = [parseFloat(parameterA),parseFloat(parameterB)];
-          const oldSelection = document.getElementsByClassName("btn-secondary");
-          oldSelection[0].classList.toggle("text-white");
-          oldSelection[0].classList.toggle("btn-secondary");
-          i.classList.toggle("text-white");
-          i.classList.toggle("btn-secondary");
-          currentEllipsoid = i.id;
-        }
-      })
-    } else if (i.id != 'custom_ell_btn') {
+    if (i.id == "custom_ell") {
+      document
+        .getElementById("custom_ell_btn")
+        .addEventListener("click", () => {
+          const parameterA = $("#param_a")[0].value;
+          const parameterB = $("#param_b")[0].value;
+          if (
+            parameterA &&
+            parameterB &&
+            !i.className.includes("btn-secondary")
+          ) {
+            console.log(i);
+            ellipsoids.custom = [
+              parseFloat(parameterA),
+              parseFloat(parameterB),
+            ];
+            const oldSelection =
+              document.getElementsByClassName("btn-secondary");
+            oldSelection[0].classList.toggle("text-white");
+            oldSelection[0].classList.toggle("btn-secondary");
+            i.classList.toggle("text-white");
+            i.classList.toggle("btn-secondary");
+            currentEllipsoid = i.id;
+          }
+        });
+    } else if (i.id != "custom_ell_btn") {
       i.addEventListener("click", () => {
         if (!i.className.includes("btn-secondary")) {
           const oldSelection = document.getElementsByClassName("btn-secondary");
@@ -64,7 +74,7 @@ if (PARAMETER.ellipsoidUsage) {
 // Input Field Elements
 const inputFields = document.getElementById("inputFields");
 // Description Field
-document.getElementById('calculationInfo').innerHTML = PARAMETER.description
+document.getElementById("calculationInfo").innerHTML = PARAMETER.description;
 
 // Output Field Elements
 const enteredValues = document.getElementById("printedEnteredValues");
@@ -75,7 +85,7 @@ const inputElements = document.getElementsByClassName("calc-inputs");
 const calculationResultElement = document.getElementById("results_text");
 let coordinateList = []; // all coordinate inputs
 let converterRan = false;
-let currentFileType = 'csv';
+let currentFileType = "csv";
 let parsedFileData;
 
 //
@@ -83,24 +93,24 @@ const resultSet = [];
 
 // Dynamic Input and Output Generation
 for (const i of PARAMETER.fieldNames) {
-  if (i == 'N/S') {
-    inputFields.innerHTML +=`<div class="input-group col mx-0">
+  if (i == "N/S") {
+    inputFields.innerHTML += `<div class="input-group col mx-0">
     <span class="input-group-text" id="inputtext_${i}">${i}</span>
     <select class="" id="nsSelector">
       <option value="true">N</option>
       <option value="false">S</option>
     </select>
      </div>
-     <input type="text" id="input${i}" class="d-none calc-inputs" >`
-  } else if (i == 'UTM/TM') {
-    inputFields.innerHTML +=`<div class="input-group col mx-0">
+     <input type="text" id="input${i}" class="d-none calc-inputs" >`;
+  } else if (i == "UTM/TM") {
+    inputFields.innerHTML += `<div class="input-group col mx-0">
     <span class="input-group-text" id="inputtext_${i}">${i}</span>
     <select class="" id="utmSelector">
       <option value="6">UTM</option>
       <option value="3">TM</option>
     </select>
      </div>
-     <input type="number" id="input${i}" class="d-none calc-inputs" >`
+     <input type="number" id="input${i}" class="d-none calc-inputs" >`;
   } else {
     inputFields.innerHTML += `<div class="input-group col mx-0">
      <span class="input-group-text" id="inputtext_${i}">${i}</span>
@@ -124,9 +134,9 @@ function checkFilledInputs() {
 
   for (const i of inputElements) {
     if (!i.value) {
-      if(!fileUploaded && !coordinateList.length){
+      if (!fileUploaded && !coordinateList.length) {
         i.style.border = "1px solid red";
-        alert('Please fill all the fields!')
+        alert("Please fill all the fields!");
       }
       check = false;
     }
@@ -145,7 +155,7 @@ function readFields() {
     }
     // console.log(coordinateList[0]["X"]);
     coordinateList.push(inputData);
-    console.log('New Input:',inputData);
+    console.log("New Input:", inputData);
   }
 }
 
@@ -155,17 +165,17 @@ function processData(rawData) {
   for (const i of PARAMETER.fieldNames) {
     preprocessed.push(rawData[i]); // put preprocessed data in the right order
   }
-  const output = window[PARAMETER.functionName](...preprocessed) //window["functionName"](), calls function named functionName()
-  inputOutput['input'] = preprocessed;
-  inputOutput['output'] = output;
+  const output = window[PARAMETER.functionName](...preprocessed); //window["functionName"](), calls function named functionName()
+  inputOutput["input"] = preprocessed;
+  inputOutput["output"] = output;
   resultSet.push(inputOutput);
-  return output; 
+  return output;
 }
 
 function printEnteredValues(upload = {}) {
   clearPrintedCoordinates();
-  if (enteredValues.parentElement.classList.contains('visually-hidden')){
-    enteredValues.parentElement.classList.toggle('visually-hidden')
+  if (enteredValues.parentElement.classList.contains("visually-hidden")) {
+    enteredValues.parentElement.classList.toggle("visually-hidden");
   }
   if (Object.keys(upload).length) {
     coordinateList = upload;
@@ -177,7 +187,6 @@ function printEnteredValues(upload = {}) {
       document.getElementById("entry" + j).appendChild(entryItem);
     }
   }
-  
 }
 
 function printResultValues() {
@@ -207,7 +216,7 @@ function printResultValues() {
   converterRan = true;
 }
 
-function clearPrintedCoordinates(){
+function clearPrintedCoordinates() {
   for (const e of PARAMETER.fieldNames) {
     document.getElementById("entry" + e).innerHTML = `<p>${e}</p>`;
   }
@@ -220,8 +229,8 @@ function reset_calculator(softReset = false) {
   coordinateList = [];
   fileUploaded = false;
   clearPrintedCoordinates();
-  if (!enteredValues.parentElement.classList.contains('visually-hidden')){
-    enteredValues.parentElement.classList.toggle('visually-hidden')
+  if (!enteredValues.parentElement.classList.contains("visually-hidden")) {
+    enteredValues.parentElement.classList.toggle("visually-hidden");
   }
   if (converterRan) {
     resultingValues.classList.toggle("visually-hidden");
@@ -240,7 +249,7 @@ function reset_calculator(softReset = false) {
   }
 }
 
-function convertBtnHandler(){
+function convertBtnHandler() {
   if (checkFilledInputs()) {
     readFields();
     printEnteredValues();
@@ -249,11 +258,9 @@ function convertBtnHandler(){
     // converterRan = true;
     printResultValues();
     //resultTextBox.innerHTML = "<ol class='row'>" + resultText + "</ol>";
-    downloadBtn.classList.toggle('visually-hidden')
+    downloadBtn.classList.toggle("visually-hidden");
   }
 }
-
-
 
 // Add new coordinate button
 const addCoordsBtn = document.getElementById("addCoords");
@@ -274,7 +281,7 @@ let fileList;
 // FILE HANDLER - BROKEN ??
 function handleFiles() {
   fileUploaded = true;
-  let fileType = '';
+  let fileType = "";
   fileList = this.files; /* now you can work with the file list */
   console.log(fileList[0].name);
   var reader = new FileReader();
@@ -284,23 +291,24 @@ function handleFiles() {
     var data;
     if (fileList[0].name.includes(".csv")) {
       data = $.csv.toObjects(fileContent);
-      fileType = 'csv';
-      console.log(data)
+      fileType = "csv";
+      console.log(data);
     } else if (
       fileList[0].name.includes(".geojson") &&
       PARAMETER.canParseGeojson
     ) {
-      fileType = 'geojson';
+      fileType = "geojson";
       json_data = JSON.parse(fileContent);
       data = geojson_parse(json_data);
     } else {
       alert("Invalid File!");
     }
     console.log(data);
-    document.getElementById('fileUploadStatus').innerText = `${data.length} coordinates were uploaded!`;
+    document.getElementById(
+      "fileUploadStatus"
+    ).innerText = `${data.length} coordinates were uploaded!`;
     parsedFileData = data;
-    
-    
+
     // for(const i of data) {
     //   printEnteredValues(i)
     // }
@@ -317,7 +325,7 @@ function checkDataValidity(parsedJson) {
     for (const input of PARAMETER.fieldNames) {
       console.log(line[input]);
       if (!line[input] && line[input] !== 0) {
-        alert("File has invalid coordinate data!")
+        alert("File has invalid coordinate data!");
         return false;
       }
     }
@@ -366,135 +374,133 @@ document.getElementById("resetBtn").addEventListener("click", () => {
   reset_calculator();
 });
 
-
-if (PARAMETER.fieldNames.includes('N/S')) {
-  const el = document.getElementById('nsSelector')
-  el.addEventListener('click', ()=>{
-    console.log(el.value)
-    if ( el.value == '3'){
-      document.getElementById('inputN/S').value = 3;
+if (PARAMETER.fieldNames.includes("N/S")) {
+  const el = document.getElementById("nsSelector");
+  el.addEventListener("click", () => {
+    console.log(el.value);
+    if (el.value == "3") {
+      document.getElementById("inputN/S").value = 3;
     } else {
-      document.getElementById('inputN/S').value = 6;
+      document.getElementById("inputN/S").value = 6;
     }
-  })
-} else if (PARAMETER.fieldNames.includes('UTM/TM')) {
-  const el = document.getElementById('utmSelector')
-  el.addEventListener('click', ()=>{
-    console.log(el.value)
-    if ( el.value == 'true'){
-      document.getElementById('inputN/S').value = true;
+  });
+} else if (PARAMETER.fieldNames.includes("UTM/TM")) {
+  const el = document.getElementById("utmSelector");
+  el.addEventListener("click", () => {
+    console.log(el.value);
+    if (el.value == "true") {
+      document.getElementById("inputN/S").value = true;
     } else {
-      document.getElementById('inputN/S').value = false;
+      document.getElementById("inputN/S").value = false;
     }
-  })
+  });
 }
 
-const btnArea = document.getElementById('dataTypeBtns')
+const btnArea = document.getElementById("dataTypeBtns");
 for (const btn of PARAMETER.dataTypes) {
   btnArea.innerHTML += `
-<button class="btn btn-outline-dark data-type-btn" id="${btn}Btn">${btn}</button>`
+<button class="btn btn-outline-dark data-type-btn" id="${btn}Btn">${btn}</button>`;
 }
-const dataTypeBtns = document.getElementsByClassName('data-type-btn');
-dataTypeBtns[0].classList.toggle('btn-secondary')
+const dataTypeBtns = document.getElementsByClassName("data-type-btn");
+dataTypeBtns[0].classList.toggle("btn-secondary");
 for (const btn of dataTypeBtns) {
-  btn.addEventListener('click', ()=>{
-    const currentlySelectedBtn = btnArea.getElementsByClassName('btn-secondary')[0]
-    if (btn.id == currentlySelectedBtn.id){
-      return
+  btn.addEventListener("click", () => {
+    const currentlySelectedBtn =
+      btnArea.getElementsByClassName("btn-secondary")[0];
+    if (btn.id == currentlySelectedBtn.id) {
+      return;
     }
-    currentlySelectedBtn.classList.toggle('btn-secondary');
-    btn.classList.toggle('btn-secondary');
-    currentFileType = btn.id.replace('Btn', '')
+    currentlySelectedBtn.classList.toggle("btn-secondary");
+    btn.classList.toggle("btn-secondary");
+    currentFileType = btn.id.replace("Btn", "");
     uploadSetter(currentFileType);
-
-  })
+  });
 }
 
-function uploadSetter(currentFileType){
-  switch (currentFileType){
-    case 'csv':
-      uploadElement.accept = '.csv';
+function uploadSetter(currentFileType) {
+  switch (currentFileType) {
+    case "csv":
+      uploadElement.accept = ".csv";
       break;
-    case 'GeoJson':
-      uploadElement.accept = '.json, .geojson';
+    case "GeoJson":
+      uploadElement.accept = ".json, .geojson";
       break;
-    case 'Excel':
-      uploadElement.accept = '.xls, .xlsx';
-      break
-
+    case "Excel":
+      uploadElement.accept = ".xls, .xlsx";
+      break;
   }
-    
 }
-
 
 // table generation for excel export
-const tableElement = document.getElementById('excel_table').getElementsByTagName('tbody')[0];
+const tableElement = document
+  .getElementById("excel_table")
+  .getElementsByTagName("tbody")[0];
 tableElement.innerHTML = `<tr data-height="25">
 <td class="" colspan='${PARAMETER.inputFields}' data-f-sz="20" data-f-color="ED6363" data-a-h="center" data-a-v="middle">Input Coordinates</td>
 <td class="" colspan='${PARAMETER.outputFields}' data-f-sz="20" data-f-color="003545" data-a-h="center" data-a-v="middle">Output Results</td>
 </tr>`;
-const columnsTableElement = document.createElement('tr')
-columnsTableElement.id='table_headers'
-for (const i of PARAMETER.fieldNames){
+const columnsTableElement = document.createElement("tr");
+columnsTableElement.id = "table_headers";
+for (const i of PARAMETER.fieldNames) {
   //const row = tableElement.getElementById('table_headers');
-  columnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="16" data-f-color="ED6363" data-a-h="center" data-a-v="middle">${i}</td>`
+  columnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="16" data-f-color="ED6363" data-a-h="center" data-a-v="middle">${i}</td>`;
 }
-for (const i of PARAMETER.outputNames){
+for (const i of PARAMETER.outputNames) {
   //const row = tableElement.getElementById('table_headers');
-  columnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="16" data-f-color="00454A" data-a-h="center" data-a-v="middle">${i}</td>`
+  columnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="16" data-f-color="00454A" data-a-h="center" data-a-v="middle">${i}</td>`;
 }
 tableElement.appendChild(columnsTableElement);
 
 function convertExcel() {
   for (const j of resultSet) {
-    const newColumnsTableElement = document.createElement('tr')
-    for (const i of j.input){
+    const newColumnsTableElement = document.createElement("tr");
+    for (const i of j.input) {
       //const row = tableElement.getElementById('table_headers');
-      newColumnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="12" data-f-color="ED6363" data-a-h="center" data-a-v="middle">${i}</td>`
+      newColumnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="12" data-f-color="ED6363" data-a-h="center" data-a-v="middle">${i}</td>`;
     }
-    for (const i of j.output){
+    for (const i of j.output) {
       //const row = tableElement.getElementById('table_headers');
-      newColumnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="12" data-f-color="3C6562" data-a-h="center" data-a-v="middle">${i}</td>`
+      newColumnsTableElement.innerHTML += `<td class="" colspan='' data-f-sz="12" data-f-color="3C6562" data-a-h="center" data-a-v="middle">${i}</td>`;
     }
-    tableElement.appendChild(newColumnsTableElement)
+    tableElement.appendChild(newColumnsTableElement);
   }
-
 }
 
-const downloadBtn = document.getElementById('downloadBtn');
-downloadBtn.addEventListener('click', ()=>{
+const downloadBtn = document.getElementById("downloadBtn");
+downloadBtn.addEventListener("click", () => {
   convertExcel();
-  TableToExcel.convert(tableElement.parentElement)
-})
+  TableToExcel.convert(tableElement.parentElement);
+});
 
-document.getElementById('importModalBtn').addEventListener('click', ()=>{
-  coordinateList = coordinateList.concat(parsedFileData);      
+document.getElementById("importModalBtn").addEventListener("click", () => {
+  coordinateList = coordinateList.concat(parsedFileData);
   if (checkDataValidity(parsedFileData)) {
-      printEnteredValues(parsedFileData);
-    } else {
-      reset_calculator(true);
-    }
-})
-
+    printEnteredValues(parsedFileData);
+  } else {
+    reset_calculator(true);
+  }
+});
 
 function alert(text) {
-  if (document.getElementsByClassName('alert').length) {
-    return
+  if (document.getElementsByClassName("alert").length) {
+    return;
   }
-  document.getElementById('alert_box').innerHTML = `<div class='alert alert-danger alert-dismissible show fade' role='alert' ><strong>
+  document.getElementById(
+    "alert_box"
+  ).innerHTML = `<div class='alert alert-danger alert-dismissible show fade' role='alert' ><strong>
   ${text}</strong>
   <button type='button' class='btn-close' data-bs-dismiss='alert' data-bs-f aria-label='Close'></button>
-  </div>` 
+  </div>`;
 }
 
-
-let text = `<strong>For CSV:</strong> File has to start with column names of ${PARAMETER.fieldNames[0]}`
-for (const j of PARAMETER.fieldNames.slice(1,PARAMETER.inputFields)) {
-  text += ` ,${j}` 
+let text = `<strong>For CSV:</strong> File has to start with column names of ${PARAMETER.fieldNames[0]}`;
+for (const j of PARAMETER.fieldNames.slice(1, PARAMETER.inputFields)) {
+  text += ` ,${j}`;
 }
-text += `. Seperated by commas.<br>Each row has have exactly ${PARAMETER.inputFields} columns of coordinates.`
-if (PARAMETER.canParseGeojson){
-  text += '<br><strong>For GeoJson:</strong> Calculator assumes the Datum as WGS84.'
+text += `. Seperated by commas.<br>Each row has have exactly ${PARAMETER.inputFields} columns of coordinates.`;
+if (PARAMETER.canParseGeojson) {
+  text +=
+    "<br><strong>For GeoJson:</strong> Calculator assumes the Datum as WGS84.";
 }
 PARAMETER.uploadDescription = text;
-document.getElementById('uploaderDesc').innerHTML = text;
+document.getElementById("uploaderDesc").innerHTML = text;

@@ -10,17 +10,17 @@ const calculations = {
     functionName: "xyz2ell",
     ellipsoidUsage: true,
     inputFields: 3,
-    outputFields:3,
+    outputFields: 3,
     fieldNames: ["X", "Y", "Z"], // Order is important
     outputNames: ["Latitude", "Longitude", "Height"],
     canReverseCalculate: true,
     reverseCalculationName: "geo2xyz",
     needsCommonFunctions: true,
     description: "Convert Cartesian coordinates to Geographic coordinates.",
-    uploadDescription: '',
+    uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ['csv','Excel']
+    dataTypes: ["csv", "Excel"],
   },
 
   geo2xyz: {
@@ -29,37 +29,36 @@ const calculations = {
     functionName: "ell2xyz",
     ellipsoidUsage: true,
     inputFields: 3,
-    outputFields:3,
+    outputFields: 3,
     fieldNames: ["Latitude", "Longitude", "Height"],
     outputNames: ["X", "Y", "Z"], // Order is important
     canReverseCalculate: true,
     reverseCalculationName: "xyz2geo",
     needsCommonFunctions: true,
     description: "Convert Geographic coordinates to Cartesian coordinates.",
-    uploadDescription: '',
+    uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: true,
-    geojsonTemplate: {"Latitude":0.0, "Longitude":0.0, "Height":0.0},
-    dataTypes: ['csv','Excel','GeoJson']
-  }
-,
+    geojsonTemplate: { Latitude: 0.0, Longitude: 0.0, Height: 0.0 },
+    dataTypes: ["csv", "Excel", "GeoJson"],
+  },
   proj2geo: {
     fullname: "Projected to Geographic",
     functionFileName: "projected_ellipsoidal.js",
     functionName: "sagYukari_to_cog",
     ellipsoidUsage: true,
     inputFields: 3,
-    outputFields:2,
+    outputFields: 2,
     fieldNames: ["Easting", "Northing", "UTM/TM"],
     outputNames: ["Latitude", "Longitude"], // Order is important
     canReverseCalculate: true,
     reverseCalculationName: "geo2proj",
     needsCommonFunctions: true,
     description: "Convert Projected Map coordinates to Geographic coordinates.",
-    uploadDescription: '',
+    uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ['csv','Excel']
+    dataTypes: ["csv", "Excel"],
   },
   geo2proj: {
     fullname: "Geographic to Projected",
@@ -67,17 +66,17 @@ const calculations = {
     functionName: "to_SagYukari",
     ellipsoidUsage: true,
     inputFields: 5,
-    outputFields:2,
-    fieldNames: ["Latitude", "Longitude", "Meridian", "UTM/TM", 'N/S'],
+    outputFields: 2,
+    fieldNames: ["Latitude", "Longitude", "Meridian", "UTM/TM", "N/S"],
     outputNames: ["Easting", "Northing"], // Order is important
     canReverseCalculate: true,
     reverseCalculationName: "proj2geo",
     needsCommonFunctions: true,
     description: "Convert Geographic coordinates to Projected Map coordinates.",
-    uploadDescription: '',
+    uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ['csv','Excel']
+    dataTypes: ["csv", "Excel"],
   },
 
   geodesicDirect: {
@@ -86,17 +85,18 @@ const calculations = {
     functionName: "firstFund",
     ellipsoidUsage: true,
     inputFields: 4,
-    outputFields:3,
-    fieldNames: ["Latitude", "Longitude","Distance", "Azimuth"], // Order is important
+    outputFields: 3,
+    fieldNames: ["Latitude", "Longitude", "Distance", "Azimuth"], // Order is important
     outputNames: ["Latitude", "Longitude", "Azimuth"],
     canReverseCalculate: true,
     reverseCalculationName: "geodesicInverse",
     needsCommonFunctions: true,
-    description: "Calculate coordinates of a point with azimuth and geodesic distance.",
-    uploadDescription: '',
+    description:
+      "Calculate coordinates of a point with azimuth and geodesic distance.",
+    uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ['csv','Excel']
+    dataTypes: ["csv", "Excel"],
   },
 
   geodesicInverse: {
@@ -105,17 +105,18 @@ const calculations = {
     functionName: "secFund",
     ellipsoidUsage: true,
     inputFields: 4,
-    outputFields:3,
-    fieldNames: ["Latitude1", "Longitude1","Latitude2", "Longitude2"], // Order is important
+    outputFields: 3,
+    fieldNames: ["Latitude1", "Longitude1", "Latitude2", "Longitude2"], // Order is important
     outputNames: ["Azimuth1", "Azimuth2", "Distance"],
     canReverseCalculate: true,
     reverseCalculationName: "geodesicDirect",
     needsCommonFunctions: true,
-    description: "Calculate azimuth between two points and their geodesic distance.",
-    uploadDescription: '',
+    description:
+      "Calculate azimuth between two points and their geodesic distance.",
+    uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ['csv','Excel']
+    dataTypes: ["csv", "Excel"],
   },
 
   julian: {
@@ -124,18 +125,17 @@ const calculations = {
     functionName: "JulianDate",
     ellipsoidUsage: false,
     inputFields: 6,
-    outputFields:1,
+    outputFields: 1,
     fieldNames: ["Year", "Month", "Day", "Hour", "Minute", "Second"],
     outputNames: ["Julian Date"],
     canReverseCalculate: false,
     reverseCalculationName: "",
     needsCommonFunctions: false,
-    description: "Calculate azimuth between two points and their geodesic distance.",
-    uploadDescription: '',
+    description:
+      "Calculate azimuth between two points and their geodesic distance.",
+    uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ['csv','Excel']
-  }
+    dataTypes: ["csv", "Excel"],
+  },
 };
-
-
