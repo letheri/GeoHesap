@@ -20,7 +20,7 @@ const calculations = {
     uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ["csv", "Excel"],
+    dataTypes: ["csv"],
   },
 
   geo2xyz: {
@@ -40,7 +40,7 @@ const calculations = {
     canFileUpload: true,
     canParseGeojson: true,
     geojsonTemplate: { Latitude: 0.0, Longitude: 0.0, Height: 0.0 },
-    dataTypes: ["csv", "Excel", "GeoJson"],
+    dataTypes: ["csv", "GeoJson"],
   },
   proj2geo: {
     fullname: "Projected to Geographic",
@@ -58,7 +58,7 @@ const calculations = {
     uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ["csv", "Excel"],
+    dataTypes: ["csv"],
   },
   geo2proj: {
     fullname: "Geographic to Projected",
@@ -76,7 +76,7 @@ const calculations = {
     uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ["csv", "Excel"],
+    dataTypes: ["csv"],
   },
 
   geodesicDirect: {
@@ -96,7 +96,7 @@ const calculations = {
     uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ["csv", "Excel"],
+    dataTypes: ["csv"],
   },
 
   geodesicInverse: {
@@ -116,7 +116,7 @@ const calculations = {
     uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ["csv", "Excel"],
+    dataTypes: ["csv"],
   },
 
   julian: {
@@ -136,6 +136,6 @@ const calculations = {
     uploadDescription: "",
     canFileUpload: true,
     canParseGeojson: false,
-    dataTypes: ["csv", "Excel"],
+    dataTypes: ["csv"],
   },
 };
