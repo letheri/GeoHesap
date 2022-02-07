@@ -2,19 +2,24 @@ function to_SagYukari(fi_,lam_, type){
     // fi_: float - Latitude of Point
   // lam_: float - Longitude of Point
   // type: int - Central Meridian Type in Degrees (UTM, TM)
-  if (type!= 6 && type != 3 ) {
+  if (typeof type === 'string' || type instanceof String) {
+    type_ = parseInt(type)
+  } else {
+    type_ = type
+  }
+  if (type_!= 6 && type_ != 3 ) {
     reset_calculator(false);
-    console.error('Invalid values entered. Type:',type,'DOM:',centralMeridian);
+    console.error('Invalid values entered. Type:',type);
     return
   }
   let centralMeridian;
-  if (type == 3) {
+  if (type_ == 3) {
     centralMeridian = (parseInt((lam_+1.5)/3))*3;
   } else {
     centralMeridian = (parseInt(lam_/6))*6 +3
   }
   const fi = degree_to_radians(fi_);
-  const lam = degree_to_radians(lam_);
+  let lam = degree_to_radians(lam_);
   const der = degree_to_radians(centralMeridian);
   
   const a = ellipsoids[currentEllipsoid][0];
@@ -42,7 +47,7 @@ function to_SagYukari(fi_,lam_, type){
     
     t = Math.tan(fi)
     
-    const  n_squared = (e2**2)*Math.cos(fi)**2
+    const  n_squared = (e2**2)*Math.cos(fi)**2;
     
     let x = N*(u+u**3 /6*(1-t**2 +n_squared)+ u**5 /120 *(5- 18*t**2 + t**4 +14*n_squared - 58*t**2 
            * n_squared+ 13*n_squared**2 +4 *n_squared**3 -64 *n_squared**2 *t**2 -24*n_squared**3 
@@ -66,26 +71,48 @@ function sagYukari_to_cog(x_,y_,centralMeridian, type, isNorth = true) {
   // y_: float - Northing
   // centralMeridian: int - Geodesic Distance from Point
   // type: int - Central Meridian Type in Degrees (UTM, TM)
-  if (!isNorth) {
-    const x = degree_to_radians(parseFloat(x_)- 500000);
-    const y = degree_to_radians(parseFloat(y_) - 10000000);
+  let type_;
+  let CM;
+  let north;
+  if (typeof type === 'string' || type instanceof String) {
+    type_ = parseInt(type)
   } else {
-    const x = degree_to_radians(parseFloat(x_)- 500000);
-    const y = degree_to_radians(parseFloat(y_));
+    type_ = type
   }
-  const der = degree_to_radians(centralMeridian);
-  
-  if ((type== 6 && centralMeridian%6 == 0 )||( type == 3 && centralMeridian%3 == 0 ) ) {
-    reset_calculator(false);
-    console.error('Invalid values entered. Type:',type,'DOM:',centralMeridian);
-    return
+  if (typeof centralMeridian === 'string' || centralMeridian instanceof String) {
+    CM = parseInt(centralMeridian)
+  } else {
+    type_ = type
   }
+  if (isNorth == 'true') {
+    north = true;
+  } else if (isNorth== 'false') {
+    north = false;
+  } else {
+    north = isNorth;
+  }
+  let x;
+  let y;
+  if (!north) {
+     x = degree_to_radians(parseFloat(x_)- 500000);
+     y = degree_to_radians(parseFloat(y_) - 10000000);
+  } else {
+     x = degree_to_radians(parseFloat(x_)- 500000);
+     y = degree_to_radians(parseFloat(y_));
+  }
+  const der = degree_to_radians(CM);
+
+  // if ((type_== 6 && CM%6 == 0 )||( type_ == 3 && CM%3 == 0 ) ) {
+  //   reset_calculator(false);
+  //   console.error('Invalid values entered. Type:',type_,'DOM:',CM);
+  //   return
+  // }
   const a = ellipsoids[currentEllipsoid][0];
   const b = ellipsoids[currentEllipsoid][1];
   const c = a**2 / b
   const e1 = ((a ** 2 - b ** 2) / a ** 2) ** 0.5;
   const e2 = ((a ** 2 - b ** 2) / b ** 2) ** 0.5;
-const f = (a-b)/a
+  const f = (a-b)/a
     const n = f /(2-f)
     const Asig = (y/(a/(1+n)*(1+n*n/4+n**4 /64)))
     
@@ -96,7 +123,7 @@ const f = (a-b)/a
     const F6 = 151/96*n**3
     
     const F8 = 1097/512*n**4
-    
+
     let fi = Asig +F2*Math.sin(2*Asig)+F4*Math.sin(4*Asig)+F6*Math.sin(6*Asig)+F8*Math.sin(8*Asig)
 
     const N = c / Math.sqrt(1 + e2**2 * Math.cos(fi)**2)
@@ -104,27 +131,26 @@ const f = (a-b)/a
     const M = a * (1- e1**2) / (1-e1**2 *Math.sin(fi)**2)**(3/2)
     
     const t = Math.tan(fi)
-    
+
     const n_squared = (e2**2)*Math.cos(fi)**2
+
+    const b01 = 180/Math.PI /N/Math.cos(fi)*3600
+
+    const b02 = t*180/Math.PI/2/N**2 *(-1-n_squared)*3600
     
-    const b01 = 180/Math.pi /N/Math.cos(fi)*3600
+    const  b03 = -(180/Math.PI/6/N**3 /Math.cos(fi)*(1+2*t**2+n_squared))*3600
     
-    const b02 = t*180/Math.pi/2/N**2 *(-1-n_squared)*3600
+    const b04 = t*180/Math.PI/24/N**4 *(5+3*t**2+ 6*n_squared -6*n_squared *t**2)*3600
     
-    const  b03 = -(180/Math.pi/6/N**3 /Math.cos(fi)*(1+2*t**2+n_squared))*3600
-    
-    const b04 = t*180/Math.pi/24/N**4 *(5+3*t**2+ 6*n_squared -6*n_squared *t**2)*3600
-    
-    const b05 = 180/Math.pi/120/N**5 /Math.cos(fi) *(5+ 28*t**2 +24*t**4)*3600
+    const b05 = 180/Math.PI/120/N**5 /Math.cos(fi) *(5+ 28*t**2 +24*t**4)*3600
     
     const dfi = b02*x**2 + b04*x**4
 
     const dlam = b01*x +b03*x**3 +b05*x**5
 
-    fi = fi + (dfi/3600*Math.pi/180)
-    let lam = der *Math.pi/180 + dlam /3600 *Math.pi/180
+    fi = fi + (dfi/3600*Math.PI/180)
+    let lam = der *Math.PI/180 + dlam /3600 *Math.PI/180
 
-
-    const conv = t*180/Math.pi*x/N-t*180/Math.pi/3/N**3 *(1+t**2 -n_squared)*x**3
+    const conv = t*180/Math.PI*x/N-t*180/Math.PI/3/N**3 *(1+t**2 -n_squared)*x**3
     return [fi,lam]
 }

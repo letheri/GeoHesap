@@ -49,7 +49,7 @@ const calculations = {
     ellipsoidUsage: true,
     inputFields: 3,
     outputFields: 2,
-    fieldNames: ["Easting", "Northing", "UTM/TM"],
+    fieldNames: ["Easting", "Northing", "Meridian", "UTM/TM", "N/S"],
     outputNames: ["Latitude", "Longitude"], // Order is important
     canReverseCalculate: true,
     reverseCalculationName: "geo2proj",
@@ -67,7 +67,7 @@ const calculations = {
     ellipsoidUsage: true,
     inputFields: 5,
     outputFields: 2,
-    fieldNames: ["Latitude", "Longitude", "Meridian", "UTM/TM", "N/S"],
+    fieldNames: ["Latitude", "Longitude", "UTM/TM"],
     outputNames: ["Easting", "Northing"], // Order is important
     canReverseCalculate: true,
     reverseCalculationName: "proj2geo",
@@ -118,7 +118,6 @@ const calculations = {
     canParseGeojson: false,
     dataTypes: ["csv"],
   },
-
   julian: {
     fullname: "Julian Date",
     functionFileName: "Julian.js",
@@ -138,4 +137,42 @@ const calculations = {
     canParseGeojson: false,
     dataTypes: ["csv"],
   },
+  dms2decimal: {
+    fullname: "DMS to Decimal Degrees",
+    functionFileName: "dms.js",
+    functionName: "to_dec",
+    ellipsoidUsage: false,
+    inputFields: 3,
+    outputFields: 1,
+    fieldNames: ["Degree", "Minute", "Second"],
+    outputNames: ["Degrees"],
+    canReverseCalculate: true,
+    reverseCalculationName: "decimal2dms",
+    needsCommonFunctions: false,
+    description:
+      "Degree Minute Second to Decimal Degrees.",
+    uploadDescription: "",
+    canFileUpload: true,
+    canParseGeojson: false,
+    dataTypes: ["csv"],
+  },
+  decimal2dms: {
+    fullname: "Decimal Degrees to DMS",
+    functionFileName: "dms.js",
+    functionName: "to_deg",
+    ellipsoidUsage: false,
+    inputFields: 1,
+    outputFields: 3,
+    fieldNames: ["Degrees"],
+    outputNames: ["Degree", "Minute", "Second"],
+    canReverseCalculate: true,
+    reverseCalculationName: "dms2decimal",
+    needsCommonFunctions: false,
+    description:
+      "Decimal Degrees to Degree Minute Second.",
+    uploadDescription: "",
+    canFileUpload: true,
+    canParseGeojson: false,
+    dataTypes: ["csv"],
+  }
 };

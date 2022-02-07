@@ -101,7 +101,7 @@ for (const i of PARAMETER.fieldNames) {
       <option value="false">S</option>
     </select>
      </div>
-     <input type="text" id="input${i}" class="d-none calc-inputs" >`;
+     <input type="text" id="input${i}" value="true" class="d-none calc-inputs" >`;
   } else if (i == "UTM/TM") {
     inputFields.innerHTML += `<div class="input-group col mx-0">
     <span class="input-group-text" id="inputtext_${i}">${i}</span>
@@ -110,7 +110,7 @@ for (const i of PARAMETER.fieldNames) {
       <option value="3">TM</option>
     </select>
      </div>
-     <input type="number" id="input${i}" class="d-none calc-inputs" >`;
+     <input type="number" value="6" id="input${i}" class="d-none calc-inputs" >`;
   } else {
     inputFields.innerHTML += `<div class="input-group col mx-0">
      <span class="input-group-text" id="inputtext_${i}">${i}</span>
@@ -384,7 +384,8 @@ if (PARAMETER.fieldNames.includes("N/S")) {
       document.getElementById("inputN/S").value = 6;
     }
   });
-} else if (PARAMETER.fieldNames.includes("UTM/TM")) {
+} 
+if (PARAMETER.fieldNames.includes("UTM/TM")) {
   const el = document.getElementById("utmSelector");
   el.addEventListener("click", () => {
     console.log(el.value);
