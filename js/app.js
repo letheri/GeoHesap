@@ -2,6 +2,7 @@ const indexCalculationList = document.getElementById("calculationIndexList");
 for (const i in calculations) {
   const PARAMETER = calculations[i];
 
+  // Adds buttons on the front page
   indexCalculationList.innerHTML += `
   <li class='list-group-item d-flex mx-2 mb-2 functionBtn' style='background-color:gray'>
     <a class='col fs-3 calculatorLink' href="calculator.html?c=${i}" > ${PARAMETER.fullname} </a>

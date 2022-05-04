@@ -1,5 +1,5 @@
-let currentCalculator = window.location.href.split("?c=")[1] || "";
-if (!window.location.href.includes("index") && currentCalculator == "") {
+const CURRENT_CALCULATOR = window.location.href.split("?c=")[1] || "";
+if (!window.location.href.includes("index") && CURRENT_CALCULATOR == "") {
   window.location.href = "error.html";
 }
 
